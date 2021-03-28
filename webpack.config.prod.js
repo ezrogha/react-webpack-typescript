@@ -4,7 +4,8 @@ const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
 module.exports = {
     mode: 'production',
-    entry: __dirname + '/src/index.js',
+    entry: __dirname + '/src/index.tsx',
+    devtool: 'source-map',
     output: {
         path: __dirname + '/build',
         filename: 'bundle.js',
@@ -13,15 +14,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.tsx$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-react', '@babel/preset-env'],
-                        plugins: ['transform-class-properties']
-                    }
-                }
+                use: 'ts-loader'
             },
             {
                 test: /\.css$/,
@@ -34,6 +29,7 @@ module.exports = {
         ]
     },
     resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
         alias: {
             'react-dom': '@hot-loader/react-dom'
         }
