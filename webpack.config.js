@@ -2,7 +2,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'development',
-    entry: __dirname + '/src/index.js',
+    entry: __dirname + '/src/index.tsx',
+    devtool: 'inline-source-map',
     output: {
         path: __dirname + '/dist',
         filename: 'main.js',
@@ -17,15 +18,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.tsx$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-react', '@babel/preset-env'],
-                        plugins: ['transform-class-properties', 'react-hot-loader/babel']
-                    }
-                }
+                use: 'ts-loader',
             },
             {
                 test: /\.css$/,
@@ -38,6 +33,7 @@ module.exports = {
         ]
     },
     resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
         alias: {
             'react-dom': '@hot-loader/react-dom'
         }
